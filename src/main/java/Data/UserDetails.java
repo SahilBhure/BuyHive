@@ -13,9 +13,23 @@ public class UserDetails {
 
     private String Name;
 
+    private Roles role;
+
     private String Password;
 
     private String Address;
+
+    public UserDetails(int ID, String name, Roles role, String password, String address) {
+        this.ID = ID;
+        Name = name;
+        this.role = role;
+        Password = password;
+        Address = address;
+    }
+
+    public UserDetails(){
+
+    }
 
     public int getID() {
         return ID;
@@ -31,6 +45,14 @@ public class UserDetails {
 
     public void setName(String name) {
         Name = name;
+    }
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
     }
 
     public String getPassword() {
@@ -49,21 +71,12 @@ public class UserDetails {
         Address = address;
     }
 
-    public UserDetails() {
-    }
-
-    public UserDetails(int ID, String name, String password, String address) {
-        this.ID = ID;
-        Name = name;
-        Password = password;
-        Address = address;
-    }
-
     @Override
     public String toString() {
         return "UserDetails{" +
                 "ID=" + ID +
                 ", Name='" + Name + '\'' +
+                ", role=" + role +
                 ", Password='" + Password + '\'' +
                 ", Address='" + Address + '\'' +
                 '}';
