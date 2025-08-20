@@ -49,6 +49,9 @@ public class UserDetails {
         Address = address;
     }
 
+    public UserDetails() {
+    }
+
     public UserDetails(int ID, String name, String password, String address) {
         this.ID = ID;
         Name = name;

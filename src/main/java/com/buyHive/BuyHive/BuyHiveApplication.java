@@ -2,7 +2,9 @@ package com.buyHive.BuyHive;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
+@EntityScan(basePackages = {"Data"})
 @SpringBootApplication
 public class BuyHiveApplication {
 
