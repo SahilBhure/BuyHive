@@ -1,10 +1,10 @@
 package com.buyHive.BuyHive.Data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,16 +21,19 @@ public class UserDetails {
 
     private Roles role;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+
     private String address;
-    
-    private HashMap<Product,Integer> inventory;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserInventory> inventory = new ArrayList<>();
+
 
     private Float Balance;
 
-    public UserDetails(int id, String name, String mail, Roles role, String password, String address, HashMap<Product, Integer> inventory, Float balance) {
+    public UserDetails(int id, String name, String mail, Roles role, String password, String address, List<UserInventory> inventory, Float balance) {
         this.id = id;
         this.name = name;
         this.mail = mail;
@@ -93,11 +96,11 @@ public class UserDetails {
         this.mail = mail;
     }
 
-    public HashMap<Product, Integer> getInventory() {
+    public List<UserInventory> getInventory() {
         return inventory;
     }
 
-    public void setInventory(HashMap<Product, Integer> inventory) {
+    public void setInventory(List<UserInventory> inventory) {
         this.inventory = inventory;
     }
 
