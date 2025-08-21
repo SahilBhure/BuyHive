@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Entity
 public class UserDetails {
 
@@ -22,17 +25,25 @@ public class UserDetails {
     private String password;
 
     private String address;
+    
+    private HashMap<Product,Integer> inventory;
 
-    public UserDetails(){}
+    private Float Balance;
 
-    public UserDetails(int id, String name, String mail, Roles role, String password, String address) {
+    public UserDetails(int id, String name, String mail, Roles role, String password, String address, HashMap<Product, Integer> inventory, Float balance) {
         this.id = id;
         this.name = name;
         this.mail = mail;
         this.role = role;
         this.password = password;
         this.address = address;
+        this.inventory = inventory;
+        Balance = balance;
     }
+
+    public UserDetails(){}
+
+
 
     public int getId() {
         return id;
@@ -82,6 +93,22 @@ public class UserDetails {
         this.mail = mail;
     }
 
+    public HashMap<Product, Integer> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(HashMap<Product, Integer> inventory) {
+        this.inventory = inventory;
+    }
+
+    public Float getBalance() {
+        return Balance;
+    }
+
+    public void setBalance(Float balance) {
+        Balance = balance;
+    }
+
     @Override
     public String toString() {
         return "UserDetails{" +
@@ -91,6 +118,8 @@ public class UserDetails {
                 ", role=" + role +
                 ", password='" + password + '\'' +
                 ", address='" + address + '\'' +
+                ", inventory=" + inventory +
+                ", Balance=" + Balance +
                 '}';
     }
 }
