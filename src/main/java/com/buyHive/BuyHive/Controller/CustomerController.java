@@ -3,9 +3,7 @@ package com.buyHive.BuyHive.Controller;
 import com.buyHive.BuyHive.Data.Product;
 import com.buyHive.BuyHive.Service.CustomerService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,17 +18,20 @@ public class CustomerController {
     }
 
     //View all products
-
     @GetMapping("/products")
     public List<Product> retrieveAllProducts(){
       return customerService.getAllProducts();
     }
 
 
-    //Purchase
+    //Purchase Product
+    @GetMapping("/products/{id}/purchase")
+    public void purchaseProduct(@PathVariable Integer id){
+
+        customerService.purchaseProduct(id);
 
 
-    //Manage Inventory
+    }
 
 
 
