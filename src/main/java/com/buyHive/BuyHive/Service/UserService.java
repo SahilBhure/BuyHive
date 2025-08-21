@@ -2,39 +2,77 @@ package com.buyHive.BuyHive.Service;
 
 import com.buyHive.BuyHive.Data.UserDetails;
 import com.buyHive.BuyHive.Data.UserDetailsRepository;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
 
     private final UserDetailsRepository userDetailsRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public UserService(UserDetailsRepository userDetailsRepository) {
+    public UserService(UserDetailsRepository userDetailsRepository,PasswordEncoder passwordEncoder) {
         this.userDetailsRepository = userDetailsRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
 
 
-    public void registerUser(UserDetails user) {
-        userDetailsRepository.save(user);
-
+    public String HelloUser(Authentication authentication) {
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails userDetails) {
+            return "Hello user: " + userDetails.getName();
+        } else {
+            return "Hello";
+        }
     }
 
-
-    //ONLY AVAIL FOR ADMIN
-    public List<UserDetails> getUsersDetails() {
+    public List<UserDetails> findAllUsers() {
         return userDetailsRepository.findAll();
     }
 
-    public UserDetails getUserDetails(){
+    public UserDetails retrieveUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userName = authentication.getName();
-
-        return userDetailsRepository.findByName(userName);
+        String userEmail = authentication.getName();
+        return userDetailsRepository.findByMail(userEmail);
     }
+
+    public UserDetails getByMail(String mail) {
+        return userDetailsRepository.findByMail(mail);
+    }
+
+
+    public void addAUser(UserDetails users) {
+        String hashedPassword = passwordEncoder.encode(users.getPassword());
+        users.setPassword(hashedPassword);
+        users.setRole(users.getRole());
+        userDetailsRepository.save(users);
+    }
+
+    public void deleteUser(Authentication authentication) {
+        if (authentication instanceof UsernamePasswordAuthenticationToken) {
+            userDetailsRepository.delete(retrieveUser());
+        }
+    }
+
+    public UserDetails updateUser(@RequestBody UserDetails users) {
+        UserDetails temporaryUser = retrieveUser();
+
+        temporaryUser.setMail(users.getMail());
+        temporaryUser.setPassword(passwordEncoder.encode(users.getPassword()));
+        temporaryUser.setName(users.getName());
+
+        return userDetailsRepository.save(temporaryUser);
+
+    }
+
 }

@@ -1,12 +1,20 @@
 package com.buyHive.BuyHive.Controller;
 
 import com.buyHive.BuyHive.Data.UserDetails;
+import com.buyHive.BuyHive.Service.JwtService;
 import com.buyHive.BuyHive.Service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,27 +23,77 @@ public class UserController {
 
     private final UserService userService;
 
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtService jwtService;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
 
 
-    @PostMapping("/register")
-    public void registerUser(@RequestBody UserDetails user){
-        userService.registerUser(user);
+    //Root Page
+
+    @GetMapping("/")
+    public String hello(Authentication authentication) {
+        return userService.HelloUser(authentication);
     }
 
-    //ONLY FOR ADMIN
+
+
+    ///Get,Add,Remove,Update User
+
+
     @GetMapping("/users")
-    public List<UserDetails> getUsersDetails(){
-        return userService.getUsersDetails();
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserDetails> getAllUsers(){
+        return userService.findAllUsers();
     }
 
     @GetMapping("/user")
-    public UserDetails getUserDetails(){
-        return userService.getUserDetails();
+    public UserDetails getUser(){
+        return userService.retrieveUser();
     }
+
+
+    @PostMapping("/register")
+    @Transactional
+    public void addAUser(@RequestBody UserDetails user){
+        userService.addAUser(user);
+    }
+
+
+    @PostMapping("/login")
+    public String login(@RequestBody UserDetails user) {
+
+        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getMail(), user.getPassword()));
+
+        if(auth.isAuthenticated()) {
+            org.springframework.security.core.userdetails.UserDetails userDetails = (org.springframework.security.core.userdetails.UserDetails) auth.getPrincipal();
+            return jwtService.generateToken(userDetails);
+        }else {
+            return "Failed";
+        }
+
+    }
+
+
+    @DeleteMapping("/user")
+    public void deleteUser(HttpServletRequest request, HttpServletResponse response,
+                           Authentication authentication) {
+        userService.deleteUser(authentication);
+        new SecurityContextLogoutHandler().logout(request, response, authentication);
+    }
+
+
+    @PutMapping("/user")
+    public void updateUser(@RequestBody UserDetails user) {
+        userService.updateUser(user);
+    }
+
 
 
 }

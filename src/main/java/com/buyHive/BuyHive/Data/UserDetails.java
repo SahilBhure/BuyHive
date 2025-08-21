@@ -13,6 +13,8 @@ public class UserDetails {
 
     private String name;
 
+    private String mail;
+
     private Roles role;
 
     private String password;
@@ -21,9 +23,10 @@ public class UserDetails {
 
     public UserDetails(){}
 
-    public UserDetails(int id, String name, Roles role, String password, String address) {
+    public UserDetails(int id, String name, String mail, Roles role, String password, String address) {
         this.id = id;
         this.name = name;
+        this.mail = mail;
         this.role = role;
         this.password = password;
         this.address = address;
@@ -69,11 +72,20 @@ public class UserDetails {
         this.address = address;
     }
 
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
     @Override
     public String toString() {
         return "UserDetails{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", mail='" + mail + '\'' +
                 ", role=" + role +
                 ", password='" + password + '\'' +
                 ", address='" + address + '\'' +

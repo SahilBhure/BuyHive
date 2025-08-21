@@ -8,4 +8,6 @@ public interface UserDetailsRepository extends JpaRepository<UserDetails,Integer
 
     UserDetails findByName(String name);
 
+    UserDetails findByMail(String mail);
+
 }
