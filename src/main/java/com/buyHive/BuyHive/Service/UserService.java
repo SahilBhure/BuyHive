@@ -64,14 +64,13 @@ public class UserService {
         }
     }
 
-    public UserDetails updateUser(@RequestBody UserDetails users) {
+    public void updateUser(@RequestBody UserDetails users) {
         UserDetails temporaryUser = retrieveUser();
 
         temporaryUser.setMail(users.getMail());
         temporaryUser.setPassword(passwordEncoder.encode(users.getPassword()));
         temporaryUser.setName(users.getName());
-
-        return userDetailsRepository.save(temporaryUser);
+        userDetailsRepository.save(temporaryUser);
 
     }
 

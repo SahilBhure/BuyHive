@@ -1,5 +1,6 @@
 package com.buyHive.BuyHive.Data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -17,6 +18,7 @@ public class UserDetails {
 
     private Roles role;
 
+    @JsonIgnore
     private String password;
 
     private String address;
