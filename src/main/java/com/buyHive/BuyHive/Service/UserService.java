@@ -1,7 +1,9 @@
 package com.buyHive.BuyHive.Service;
 
+import com.buyHive.BuyHive.Data.ProductRepository;
 import com.buyHive.BuyHive.Data.UserDetails;
 import com.buyHive.BuyHive.Data.UserDetailsRepository;
+import com.buyHive.BuyHive.Data.UserInventory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,11 +19,14 @@ import java.util.Set;
 public class UserService {
 
     private final UserDetailsRepository userDetailsRepository;
+    private final ProductRepository productRepository;
     private PasswordEncoder passwordEncoder;
 
-    public UserService(UserDetailsRepository userDetailsRepository,PasswordEncoder passwordEncoder) {
+
+    public UserService(UserDetailsRepository userDetailsRepository,PasswordEncoder passwordEncoder,ProductRepository productRepository) {
         this.userDetailsRepository = userDetailsRepository;
         this.passwordEncoder = passwordEncoder;
+        this.productRepository = productRepository;
     }
 
 
@@ -70,8 +75,17 @@ public class UserService {
         temporaryUser.setMail(users.getMail());
         temporaryUser.setPassword(passwordEncoder.encode(users.getPassword()));
         temporaryUser.setName(users.getName());
+        temporaryUser.setBalance(users.getBalance());
         userDetailsRepository.save(temporaryUser);
 
+    }
+
+    //View Inventory
+    public List<UserInventory> viewInventory(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+        UserDetails user = userDetailsRepository.findByMail(userEmail);
+        return user.getInventory();
     }
 
 }

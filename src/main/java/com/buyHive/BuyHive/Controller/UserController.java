@@ -1,6 +1,7 @@
 package com.buyHive.BuyHive.Controller;
 
 import com.buyHive.BuyHive.Data.UserDetails;
+import com.buyHive.BuyHive.Data.UserInventory;
 import com.buyHive.BuyHive.Service.JwtService;
 import com.buyHive.BuyHive.Service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -94,6 +95,11 @@ public class UserController {
         userService.updateUser(user);
     }
 
+
+    @GetMapping("/user/inventory")
+    public List<UserInventory> retrieveUserInventory(){
+        return userService.viewInventory();
+    }
 
 
 }
