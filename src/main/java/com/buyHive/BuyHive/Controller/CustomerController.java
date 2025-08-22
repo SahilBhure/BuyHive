@@ -27,10 +27,7 @@ public class CustomerController {
     //Purchase Product
     @GetMapping("/products/{id}/purchase")
     public void purchaseProduct(@PathVariable Integer id){
-
         customerService.purchaseProduct(id);
-
-
     }
 
 

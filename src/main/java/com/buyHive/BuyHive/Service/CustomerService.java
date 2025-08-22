@@ -66,7 +66,7 @@ public class CustomerService {
             user.getInventory().add(newInventory);
         }
 
-        // save user (cascade will save inventory too)
+        // save user
         userDetailsRepository.save(user);
     }
 
