@@ -20,9 +20,14 @@ public class CustomerService {
         this.userDetailsRepository = userDetailsRepository;
     }
 
+
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
+
+    public Product getSpecificProduct(Integer id){return productRepository.getReferenceById(id);}
+
 
     @Transactional
     public void purchaseProduct(Integer productId) {

@@ -24,6 +24,12 @@ public class CustomerController {
     }
 
 
+    //View Specific Product
+    @GetMapping("/products/{id}")
+    public Product retrieveSpecificProduct(@PathVariable Integer id){
+        return customerService.getSpecificProduct(id);
+    }
+
     //Purchase Product
     @GetMapping("/products/{id}/purchase")
     public void purchaseProduct(@PathVariable Integer id){
