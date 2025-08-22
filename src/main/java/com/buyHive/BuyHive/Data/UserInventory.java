@@ -1,5 +1,6 @@
 package com.buyHive.BuyHive.Data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 
@@ -11,6 +12,7 @@ public class UserInventory {
     private int id;
 
     @ManyToOne
+    @JsonBackReference
     private UserDetails user;
 
     @ManyToOne
