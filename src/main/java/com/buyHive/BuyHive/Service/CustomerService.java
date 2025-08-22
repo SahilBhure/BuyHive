@@ -44,6 +44,9 @@ public class CustomerService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with id " + productId));
 
+        //Get product owner
+        UserDetails seller = productRepository.findSellerByProductId(productId);
+
         // check balance
         if (user.getBalance() < product.getPrice()) {
             throw new RuntimeException("Insufficient balance!");
@@ -70,6 +73,10 @@ public class CustomerService {
             newInventory.setQuantity(1);
             user.getInventory().add(newInventory);
         }
+
+        //add amount to seller's balance
+        seller.setBalance(seller.getBalance() + product.getPrice());
+
 
         // save user
         userDetailsRepository.save(user);
