@@ -67,20 +67,6 @@ public class UserController {
     }
 
 
-    @PostMapping("/login")
-    public String login(@RequestBody UserDetails user) {
-
-        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getMail(), user.getPassword()));
-
-        if(auth.isAuthenticated()) {
-            org.springframework.security.core.userdetails.UserDetails userDetails = (org.springframework.security.core.userdetails.UserDetails) auth.getPrincipal();
-            return jwtService.generateToken(userDetails);
-        }else {
-            return "Failed";
-        }
-
-    }
-
 
     @DeleteMapping("/user")
     public void deleteUser(HttpServletRequest request, HttpServletResponse response,
