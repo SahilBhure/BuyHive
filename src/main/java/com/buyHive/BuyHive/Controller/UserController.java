@@ -24,26 +24,15 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
     AuthenticationManager authenticationManager;
 
-    @Autowired
     private JwtService jwtService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthenticationManager authenticationManager, JwtService jwtService) {
         this.userService = userService;
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
-
-
-
-    //Root Page
-
-//    @GetMapping("/")
-//    public String hello(Authentication authentication) {
-//        return userService.HelloUser(authentication);
-//    }
-
-
 
     ///Get,Add,Remove,Update User
 
