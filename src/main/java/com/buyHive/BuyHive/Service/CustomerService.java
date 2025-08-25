@@ -25,8 +25,7 @@ public class CustomerService {
         return productRepository.findAll();
     }
     
-    public Product getSpecificProduct(Integer id){return productRepository.getReferenceById(id);}
-
+    public Optional<Product> getSpecificProduct(Integer id){return productRepository.findById(id);}
 
     @Transactional
     public void purchaseProduct(Integer productId) {

@@ -10,4 +10,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("SELECT p.sellerId FROM Product p WHERE p.id = :id")
     UserDetails findSellerByProductId(@Param("id") int id);
+
+    Product findProductById(Integer id);
 }

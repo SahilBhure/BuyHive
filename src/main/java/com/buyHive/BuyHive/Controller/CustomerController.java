@@ -5,7 +5,9 @@ import com.buyHive.BuyHive.Service.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/Customer")
 @RestController
@@ -26,7 +28,7 @@ public class CustomerController {
 
     //View Specific Product
     @GetMapping("/products/{id}")
-    public Product retrieveSpecificProduct(@PathVariable Integer id){
+    public Optional<Product> retrieveSpecificProduct(@PathVariable Integer id){
         return customerService.getSpecificProduct(id);
     }
 

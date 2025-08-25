@@ -38,10 +38,10 @@ public class UserController {
 
     //Root Page
 
-    @GetMapping("/")
-    public String hello(Authentication authentication) {
-        return userService.HelloUser(authentication);
-    }
+//    @GetMapping("/")
+//    public String hello(Authentication authentication) {
+//        return userService.HelloUser(authentication);
+//    }
 
 
 
