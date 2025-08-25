@@ -31,31 +31,25 @@ public class UserService {
 
 
 
-
-    public String HelloUser(Authentication authentication) {
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails userDetails) {
-            return "Hello user: " + userDetails.getName();
-        } else {
-            return "Hello";
-        }
-    }
-
+    //Get All User's From Database
     public List<UserDetails> findAllUsers() {
         return userDetailsRepository.findAll();
     }
 
+    //Get Current Authenticated User
     public UserDetails retrieveUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
         return userDetailsRepository.findByMail(userEmail);
     }
 
+    //Get User Based on Mail Address
     public UserDetails getByMail(String mail) {
         return userDetailsRepository.findByMail(mail);
     }
 
 
+    //Add User To Database
     public void addAUser(UserDetails users) {
         String hashedPassword = passwordEncoder.encode(users.getPassword());
         users.setPassword(hashedPassword);
@@ -63,12 +57,15 @@ public class UserService {
         userDetailsRepository.save(users);
     }
 
+
+    //Delete User from Database
     public void deleteUser(Authentication authentication) {
         if (authentication instanceof UsernamePasswordAuthenticationToken) {
             userDetailsRepository.delete(retrieveUser());
         }
     }
 
+    //Update User Info
     public void updateUser(@RequestBody UserDetails users) {
         UserDetails temporaryUser = retrieveUser();
 

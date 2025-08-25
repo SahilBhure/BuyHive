@@ -24,8 +24,7 @@ public class CustomerService {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
-
-
+    
     public Product getSpecificProduct(Integer id){return productRepository.getReferenceById(id);}
 
 
@@ -76,6 +75,9 @@ public class CustomerService {
 
         //add amount to seller's balance
         seller.setBalance(seller.getBalance() + product.getPrice());
+
+        //deduct the product from sellers inventory
+        //TODO
 
 
         // save user
