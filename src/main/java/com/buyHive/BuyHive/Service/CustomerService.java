@@ -12,8 +12,8 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-    private ProductRepository productRepository;
-    private UserDetailsRepository userDetailsRepository;
+    private final ProductRepository productRepository;
+    private final UserDetailsRepository userDetailsRepository;
 
     public CustomerService(ProductRepository productRepository,UserDetailsRepository userDetailsRepository) {
         this.productRepository = productRepository;

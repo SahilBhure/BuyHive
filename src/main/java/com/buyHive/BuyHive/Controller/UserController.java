@@ -24,9 +24,9 @@ public class UserController {
 
     private final UserService userService;
 
-    AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
     public UserController(UserService userService, AuthenticationManager authenticationManager, JwtService jwtService) {
         this.userService = userService;

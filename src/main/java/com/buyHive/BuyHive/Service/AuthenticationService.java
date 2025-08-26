@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService {
 
-    AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
     public AuthenticationService(AuthenticationManager authenticationManager, JwtService jwtService) {
         this.authenticationManager = authenticationManager;
@@ -29,7 +29,7 @@ public class AuthenticationService {
     }
 
     public void logoutUser() {
-
+    //TODO
 
 
     }

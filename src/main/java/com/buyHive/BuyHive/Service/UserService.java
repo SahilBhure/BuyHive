@@ -20,7 +20,7 @@ public class UserService {
 
     private final UserDetailsRepository userDetailsRepository;
     private final ProductRepository productRepository;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
 
     public UserService(UserDetailsRepository userDetailsRepository,PasswordEncoder passwordEncoder,ProductRepository productRepository) {
