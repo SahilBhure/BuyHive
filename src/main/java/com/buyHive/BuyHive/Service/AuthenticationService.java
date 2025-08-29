@@ -28,10 +28,5 @@ public class AuthenticationService {
         }
     }
 
-    public void logoutUser() {
-    //TODO
-
-
-    }
 
 }

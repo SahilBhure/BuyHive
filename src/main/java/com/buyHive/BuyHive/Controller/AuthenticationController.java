@@ -19,17 +19,12 @@ public class AuthenticationController {
     }
 
 
-
-
     @PostMapping("/login")
     public void loginUser(@RequestBody UserDetails userDetails){
         authenticationService.loginUser(userDetails);
     }
 
-    @GetMapping("/logout")
-    public void logoutUser(){
-        authenticationService.logoutUser();
-    }
+
 
 
 
